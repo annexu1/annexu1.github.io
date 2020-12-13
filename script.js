@@ -304,7 +304,7 @@ Highcharts.getJSON('./countryJSON/testJSON3.json', function (data) {
       yAxis: 1,
 
       tooltip: {
-        valuePrefix : "$",
+        // valuePrefix : "$",
         color: '#8B0E04',
         
         // xDateFormat: '%d/%m/%Y'
