@@ -10,8 +10,8 @@ let stockTesting;
 
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 20, bottom: 30, left: 50},
-    width = 700 - margin.left - margin.right,
-    height = 350 - margin.top - margin.bottom;
+    width = 650 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
@@ -235,7 +235,13 @@ Highcharts.getJSON('./countryJSON/testJSON3.json', function (data) {
     },
 
     title: {
-      text: 'Index Price and COVID Cases'
+      text: 'Index Price and COVID Cases',
+      style: {
+        fontFamily: 'EB Garamond',
+        color: '#7399C6',
+        fontSize:'24px',
+    }
+
     },
     // subtitle:{
     //     text:"hm",
@@ -244,7 +250,7 @@ Highcharts.getJSON('./countryJSON/testJSON3.json', function (data) {
 
     yAxis: [{
         title: {
-          text: 'New Confirmed Cases',
+          text: 'New Confirmed Fatalities',
           style: { color:  '#8B0E04'},
 
         }
