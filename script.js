@@ -10,14 +10,14 @@ let stockTesting;
 
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 20, bottom: 30, left: 50},
-    width = 800 - margin.left - margin.right,
-    height = 420 - margin.top - margin.bottom;
+    width = 700 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("height", 330 + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
@@ -44,6 +44,30 @@ console.log(data)
   svg.append("g")
     .call(d3.axisLeft(y));
 
+
+
+  
+    svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", width - 20)
+    .attr("y", height + 32)
+    .attr("font-family", "Roboto")
+    .text("new Confirmed Cases");
+
+
+    svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "end")
+    .attr("y", 0)
+    .attr("dy", "-2.3em")
+    .attr("transform", "rotate(-90)")
+    
+    .attr("font-family", "Roboto")
+    .text("new Fatality Cases");
+
+    
+
   // Add a scale for bubble size
   var z = d3.scaleLinear()
     .domain([200000, 1310000000])
@@ -52,14 +76,20 @@ console.log(data)
   // Add a scale for bubble color
   var myColor = d3.scaleOrdinal()
     .domain(["Asia", "Europe", "Americas", "Africa", "Oceania"])
-    .range(d3.schemeSet2);
+    .range(["#88CBDF","#7399C6","#E2D4D6","#9194B6","#4E917A"]);
+    // .range(d3.schemeSet2);
+  
+    var colorTest = d3.scaleThreshold()
+  .domain([40,75,90])
+  .range(["#88CBDF","#4E917A","#E2D4D6","#9194B6"]);
+    
 
   // -1- Create a tooltip div that is hidden by default:
   var tooltip = d3.select("#my_dataviz")
     .append("div")
       .style("opacity", 0)
       .attr("class", "tooltip")
-      .style("background-color", "black")
+      .style("background-color", "#00355F")
       .style("border-radius", "5px")
       .style("padding", "10px")
       .style("color", "white")
@@ -148,6 +178,8 @@ console.log(data)
       .style("opacity", 0)
   }
 
+
+
   // Add dots
   svg.append('g')
     .selectAll("dot")
@@ -159,10 +191,17 @@ console.log(data)
       .attr("cy", function (d) { return y(d.newFatalities)-30; } )
       .attr("r", function (d) { return z(d.population); } )
       .style("fill", function (d) { return myColor(d.totalFatalities); }   )
+
+      // .style("fill", function(d) { return colorTest(d); })
+
     // -3- Trigger the functions
     .on("mouseover", showTooltip )
     .on("mousemove", moveTooltip )
     .on("mouseleave", hideTooltip )
+
+
+
+  
 
   })
 
@@ -173,57 +212,6 @@ console.log(data)
 // width = 500 - margin.left - margin.right,
 // height = 420 - margin.top - margin.bottom;
 
-
-
-// append the svg object to the body of the page
-var svgViz = d3.select("#lineViz")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-
-//Read the data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
-
-  // When reading the csv, I must format variables:
-  function(d){
-    return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
-  },
-
-  // Now I can use this dataset:
-  function(data) {
-
-    console.log(data)
-
-    // Add X axis --> it is a date format
-    var x = d3.scaleTime()
-      .domain(d3.extent(data, function(d) { return d.date; }))
-      .range([ 0, width ]);
-    svgViz.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-    // Add Y axis
-    var y = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) { return +d.value; })])
-      .range([ height, 0 ]);
-    svgViz.append("g")
-      .call(d3.axisLeft(y));
-
-    // Add the line
-    svgViz.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return x(d.date) })
-        .y(function(d) { return y(d.value) })
-        )
-
-})
 
 
 let hm; 
