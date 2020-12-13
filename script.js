@@ -10,7 +10,7 @@ let stockTesting;
 
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 20, bottom: 30, left: 50},
-    width = 650 - margin.left - margin.right,
+    width = 690 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -114,12 +114,38 @@ console.log(data)
          "MX":"Mexico",
          "RU":"Russia",
          "ES":"Spain",
-        "GK" : "UK"} 
+        "GB" : "UK"} 
     
 
   
 
+
       let countryName = d.country
+
+      console.log(d)
+
+
+      if(typeof countryNames[countryName] !== "undefined") {
+
+        let currP = d.population
+        let currT = d.totalConfirmed
+
+        let currTotalRatio = ((currT/currP) * 100).toFixed(2) + '%'
+
+
+
+        document.getElementById('countryName').innerHTML = '<b> Country: </b>' +  countryNames[countryName] + " (" +  d.country + ")"
+        document.getElementById('newConfirmed').innerHTML = '<b> New Confimed Cases: </b>' + d.newConfirmed
+        document.getElementById('newFatalities').innerHTML = '<b> New Fatality Cases: </b>' + d.newFatalities
+        document.getElementById('population').innerHTML = '<b> Population: </b>' + d.population
+        document.getElementById('totalConfirmed').innerHTML = '<b> Total Confirmed Cases: </b>' + d.totalConfirmed + " (" +  currTotalRatio + " of pop.)"
+        // document.getElementById('totalFatalities').innerHTML = '<b> Country: </b>' + d.totalFatalities
+        document.getElementById('totalRecovered').innerHTML = '<b> Total Recovered: </b>' + d.totalRecovered
+
+
+      } 
+
+      
 
   
 
